@@ -28,6 +28,7 @@ class ModuleDocFragment(object):
           - azure
           - jwt
           - cert
+          - kubernetes
           - none
         default: token
         type: str

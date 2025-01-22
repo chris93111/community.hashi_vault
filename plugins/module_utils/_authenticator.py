@@ -24,6 +24,7 @@ from ansible_collections.community.hashi_vault.plugins.module_utils._auth_method
 from ansible_collections.community.hashi_vault.plugins.module_utils._auth_method_none import HashiVaultAuthMethodNone
 from ansible_collections.community.hashi_vault.plugins.module_utils._auth_method_token import HashiVaultAuthMethodToken
 from ansible_collections.community.hashi_vault.plugins.module_utils._auth_method_userpass import HashiVaultAuthMethodUserpass
+from ansible_collections.community.hashi_vault.plugins.module_utils._auth_method_k8s import HashiVaultAuthMethodKubernetes
 
 
 class HashiVaultAuthenticator():
@@ -37,6 +38,7 @@ class HashiVaultAuthenticator():
             'azure',
             'jwt',
             'cert',
+            'kubernetes',
             'none',
         ]),
         mount_point=dict(type='str'),
@@ -61,6 +63,8 @@ class HashiVaultAuthenticator():
         azure_resource=dict(type='str', default='https://management.azure.com/'),
         cert_auth_private_key=dict(type='path', no_log=False),
         cert_auth_public_key=dict(type='path'),
+        kubernetes_token=dict(type='str', no_log=True),
+        kubernetes_token_path=dict(type='str', default='/var/run/secrets/kubernetes.io/serviceaccount/token', no_log=False),
     )
 
     def __init__(self, option_adapter, warning_callback, deprecate_callback):
@@ -77,6 +81,7 @@ class HashiVaultAuthenticator():
             'none': HashiVaultAuthMethodNone(option_adapter, warning_callback, deprecate_callback),
             'token': HashiVaultAuthMethodToken(option_adapter, warning_callback, deprecate_callback),
             'userpass': HashiVaultAuthMethodUserpass(option_adapter, warning_callback, deprecate_callback),
+            'kubernetes': HashiVaultAuthMethodKubernetes(option_adapter, warning_callback),
         }
 
         self.warn = warning_callback

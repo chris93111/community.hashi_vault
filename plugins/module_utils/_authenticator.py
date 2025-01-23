@@ -81,7 +81,7 @@ class HashiVaultAuthenticator():
             'none': HashiVaultAuthMethodNone(option_adapter, warning_callback, deprecate_callback),
             'token': HashiVaultAuthMethodToken(option_adapter, warning_callback, deprecate_callback),
             'userpass': HashiVaultAuthMethodUserpass(option_adapter, warning_callback, deprecate_callback),
-            'kubernetes': HashiVaultAuthMethodKubernetes(option_adapter, warning_callback),
+            'kubernetes': HashiVaultAuthMethodKubernetes(option_adapter, warning_callback, deprecate_callback),
         }
 
         self.warn = warning_callback
